@@ -33,50 +33,47 @@ const Scanner = (props) => {
   const _onDetected = (result) => {
     let code = result;
     Quagga.stop();
-    const handl = props.handleScan;
-    return handl(code);
+    return props.handleScan(code);
   };
 
+  // ↓検出中にボックスを描画する時にオンにする
   const _onProcessed = (result) => {
-    let drawingCtx = Quagga.canvas.ctx.overlay,
-      drawingCanvas = Quagga.canvas.dom.overlay;
-
-    if (result) {
-      if (result.boxes) {
-        drawingCtx.clearRect(
-          0,
-          0,
-          parseInt(drawingCanvas.getAttribute('width'), 10),
-          parseInt(drawingCanvas.getAttribute('height'), 10)
-        );
-        result.boxes
-          .filter(function (box) {
-            return box !== result.box;
-          })
-          .forEach(function (box) {
-            Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, {
-              color: 'green',
-              lineWidth: 2,
-            });
-          });
-      }
-
-      if (result.box) {
-        Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, {
-          color: '#00F',
-          lineWidth: 2,
-        });
-      }
-
-      if (result.box) {
-        Quagga.ImageDebug.drawPath(
-          result.line,
-          { x: 'x', y: 'y' },
-          drawingCtx,
-          { color: 'red', lineWidth: 3 }
-        );
-      }
-    }
+    // let drawingCtx = Quagga.canvas.ctx.overlay,
+    //   drawingCanvas = Quagga.canvas.dom.overlay;
+    // if (result) {
+    //   if (result.boxes) {
+    //     drawingCtx.clearRect(
+    //       0,
+    //       0,
+    //       parseInt(drawingCanvas.getAttribute('width'), 10),
+    //       parseInt(drawingCanvas.getAttribute('height'), 10)
+    //     );
+    //     result.boxes
+    //       .filter(function (box) {
+    //         return box !== result.box;
+    //       })
+    //       .forEach(function (box) {
+    //         Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, {
+    //           color: 'green',
+    //           lineWidth: 2,
+    //         });
+    //       });
+    //   }
+    //   if (result.box) {
+    //     Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, {
+    //       color: '#00F',
+    //       lineWidth: 2,
+    //     });
+    //   }
+    //   if (result.box) {
+    //     Quagga.ImageDebug.drawPath(
+    //       result.line,
+    //       { x: 'x', y: 'y' },
+    //       drawingCtx,
+    //       { color: 'red', lineWidth: 3 }
+    //     );
+    //   }
+    // }
   };
 
   useEffect(() => {
@@ -85,6 +82,7 @@ const Scanner = (props) => {
         inputStream: {
           type: 'LiveStream',
           constraints: {
+            // ↓検出の精度に影響するので見た目はcssで調整
             width: { min: 800, max: 1280 },
             height: { min: 600, max: 720 },
             aspectRatio: { min: 4 / 3, max: 16 / 9 },
