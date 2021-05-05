@@ -11,3 +11,32 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#wrapInteractive {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  transform: scale(0.7, 0.7);
+}
+
+#interactive {
+  position: absolute;
+  top: -200px;
+  left: -530px;
+  overflow: hidden;
+}
+
+#scanArea {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 100px;
+  top: 60px;
+  left: -50px;
+  font-size: 40px;
+  border: solid 2px #fff;
+  color: #fff;
+  z-index: 666;
+}

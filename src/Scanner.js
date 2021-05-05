@@ -12,7 +12,12 @@ class Scanner extends Component {
   }
 
   render() {
-    return <div id="interactive" className="viewport" />;
+    return (
+      <div id="wrapInteractive">
+        <div id="interactive" className="viewport" />
+        <div id="scanArea">BARCODE</div>
+      </div>
+    );
   }
 
   componentDidMount() {
@@ -21,10 +26,9 @@ class Scanner extends Component {
         inputStream: {
           type: 'LiveStream',
           constraints: {
-            width: { min: 200, max: 400 },
-            height: { min: 150, max: 300 },
+            width: { min: 800, max: 1280 },
+            height: { min: 600, max: 720 },
             aspectRatio: { min: 4 / 3, max: 16 / 9 },
-            facingMode: 'environment', // or user
           },
           area: {
             // defines rectangle of the detection/localization area
