@@ -4,7 +4,6 @@ import { Scanner } from './Scanner';
 import { Box, Button, Dialog, DialogContent } from '@material-ui/core';
 
 const App = () => {
-  const [results, setResults] = useState('');
   const [scanCode, setScanCode] = useState('');
   const [modal, setModal] = useState(false);
 
@@ -15,7 +14,6 @@ const App = () => {
   const _onDetected = (result) => {
     setModal(false);
     setScanCode(result ? result.codeResult.code : '');
-    setResults(result);
   };
 
   return (
