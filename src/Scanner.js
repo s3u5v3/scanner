@@ -6,7 +6,7 @@ class Scanner extends Component {
     super(props);
     this.videoRef = React.createRef();
     this.state = {
-      dataUri: ''
+      dataUri: '',
     };
     this._onDetected = this._onDetected.bind(this);
   }
@@ -21,26 +21,23 @@ class Scanner extends Component {
         inputStream: {
           type: 'LiveStream',
           constraints: {
-            width: { min: 300, max: 400 },
-            height: { min: 200, max: 300 },
+            width: { min: 200, max: 400 },
+            height: { min: 150, max: 300 },
             aspectRatio: { min: 4 / 3, max: 16 / 9 },
-            //width: 800,
-            //height: 600,
-            //aspectRatio: 4 / 3,
-            facingMode: 'environment' // or user
+            facingMode: 'environment', // or user
           },
           area: {
             // defines rectangle of the detection/localization area
             top: '0%', // top offset
             right: '0%', // right offset
             left: '0%', // left offset
-            bottom: '0%' // bottom offset
-          }
+            bottom: '0%', // bottom offset
+          },
         },
         frequency: 'full',
         locator: {
           patchSize: 'medium',
-          halfSample: true
+          halfSample: true,
         },
         numOfWorkers: 8,
         decoder: {
@@ -51,14 +48,14 @@ class Scanner extends Component {
             'code_128_reader',
             //'code_39_vin_reader'
             //'codabar_reader',
-            'upc_reader'
+            'upc_reader',
             //'upc_e_reader',
             //'i2of5_reader'
-          ]
+          ],
         },
-        locate: true
+        locate: true,
       },
-      function(err) {
+      function (err) {
         if (err) {
           return console.log(err);
         }
@@ -126,13 +123,13 @@ class Scanner extends Component {
           parseInt(drawingCanvas.getAttribute('height'), 10)
         );
         result.boxes
-          .filter(function(box) {
+          .filter(function (box) {
             return box !== result.box;
           })
-          .forEach(function(box) {
+          .forEach(function (box) {
             Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, {
               color: 'green',
-              lineWidth: 2
+              lineWidth: 2,
             });
           });
       }
@@ -140,7 +137,7 @@ class Scanner extends Component {
       if (result.box) {
         Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, {
           color: '#00F',
-          lineWidth: 2
+          lineWidth: 2,
         });
       }
 
@@ -157,4 +154,3 @@ class Scanner extends Component {
 }
 
 export default Scanner;
-

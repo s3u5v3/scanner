@@ -1,8 +1,19 @@
 import React, { Component } from 'react';
 import Scanner from './Scanner';
 import Result from './Result';
-import { Button, Modal } from 'react-bootstrap';
+// import { Modal } from 'react-bootstrap';
 // import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+  Box,
+  Button,
+  Modal,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  makeStyles,
+} from '@material-ui/core';
 
 class App extends Component {
   constructor(props) {
@@ -18,26 +29,37 @@ class App extends Component {
   }
 
   render() {
+    // const classes = useStyles();
     return (
-      <div>
-        <Button variant="info" block onClick={this._toggle}>
+      <Box>
+        <Button variant="contained" onClick={this._toggle}>
           Scan Barcode
         </Button>
 
         {this.state.scanSuccess ? (
           <Result key="scanResult" text={this.state.scanCode} />
         ) : null}
-        <input id="scanner_result" type="text" value={this.state.scanCode} />
-        <input id="scanner_result" type="text" value={this.state.result} />
-        <input id="scanner_result" type="text" value={this.state.scanSuccess} />
+        <Box>
+          <input id="scanner_result" type="text" value={this.state.scanCode} />
+          <input id="scanner_result" type="text" value={this.state.result} />
+          <input
+            id="scanner_result"
+            type="text"
+            value={this.state.scanSuccess}
+          />
+        </Box>
 
-        <Modal show={this.state.modal} onHide={this._toggle}>
-          <Modal.Header closeButton="true" />
-          <Modal.Body>
+        <Dialog
+          open={this.state.modal}
+          onClose={this._toggle}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <DialogContent>
             <Scanner handleScan={this._onDetected} />
-          </Modal.Body>
-        </Modal>
-      </div>
+          </DialogContent>
+        </Dialog>
+      </Box>
     );
   }
 
