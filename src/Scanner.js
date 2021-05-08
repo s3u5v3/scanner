@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import Quagga from 'quagga';
-import styled from 'styled-components';
+import React, { useEffect } from "react";
+import Quagga from "quagga";
+import styled from "styled-components";
 
 const ScanArea = styled.div`
   position: relative;
@@ -29,11 +29,16 @@ const ScanArea = styled.div`
   }
 `;
 
+// 978から始まるコードのみ処理
 const Scanner = (props) => {
   const _onDetected = (result) => {
-    let code = result;
-    Quagga.stop();
-    return props.handleScan(code);
+    console.log(result.codeResult.code);
+    let code = result.codeResult.code.substring(0, 3);
+    console.log(code);
+    if (code === "978") {
+      Quagga.stop();
+      return props.handleScan(result);
+    }
   };
 
   // ↓検出中にボックスを描画する時にオンにする
@@ -80,31 +85,31 @@ const Scanner = (props) => {
     Quagga.init(
       {
         inputStream: {
-          type: 'LiveStream',
+          type: "LiveStream",
           constraints: {
             // ↓検出の精度に影響するので見た目はcssで調整
             width: { min: 800, max: 1280 },
             height: { min: 600, max: 720 },
-            aspectRatio: { min: 4 / 3, max: 16 / 9 },
+            aspectRatio: { min: 4 / 3, max: 16 / 9 }
           },
           area: {
             // defines rectangle of the detection/localization area
-            top: '0%', // top offset
-            right: '0%', // right offset
-            left: '0%', // left offset
-            bottom: '0%', // bottom offset
-          },
+            top: "0%", // top offset
+            right: "0%", // right offset
+            left: "0%", // left offset
+            bottom: "0%" // bottom offset
+          }
         },
-        frequency: 'full',
+        frequency: "full",
         locator: {
-          patchSize: 'medium',
-          halfSample: true,
+          patchSize: "medium",
+          halfSample: true
         },
         numOfWorkers: 2,
         decoder: {
           readers: [
             // 'code_39_reader',
-            'ean_reader',
+            "ean_reader"
             // 'ean_8_reader',
             // 'code_128_reader',
             //'code_39_vin_reader'
@@ -112,9 +117,9 @@ const Scanner = (props) => {
             // 'upc_reader',
             //'upc_e_reader',
             //'i2of5_reader'
-          ],
+          ]
         },
-        locate: true,
+        locate: true
       },
       function (err) {
         if (err) {
